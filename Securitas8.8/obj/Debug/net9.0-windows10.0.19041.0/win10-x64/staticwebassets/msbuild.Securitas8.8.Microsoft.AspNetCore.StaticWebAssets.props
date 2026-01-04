@@ -1,0 +1,224 @@
+﻿<Project>
+  <ItemGroup>
+    <StaticWebAsset Include="$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\css\app.css'))">
+      <SourceType>Package</SourceType>
+      <SourceId>Securitas8.8</SourceId>
+      <ContentRoot>$(MSBuildThisFileDirectory)..\staticwebassets\</ContentRoot>
+      <BasePath>/</BasePath>
+      <RelativePath>css/app.css</RelativePath>
+      <AssetKind>All</AssetKind>
+      <AssetMode>All</AssetMode>
+      <AssetRole>Primary</AssetRole>
+      <RelatedAsset></RelatedAsset>
+      <AssetTraitName></AssetTraitName>
+      <AssetTraitValue></AssetTraitValue>
+      <Fingerprint>i6pxxpr3wy</Fingerprint>
+      <Integrity>Rs22wJU2T3WczThpg8HpgswlwJoYesLiX5IoqHThwIs=</Integrity>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      <FileLength>3498</FileLength>
+      <LastWriteTime>Sun, 04 Jan 2026 07:46:24 GMT</LastWriteTime>
+      <OriginalItemSpec>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\css\app.css'))</OriginalItemSpec>
+    </StaticWebAsset>
+    <StaticWebAsset Include="$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\css\bootstrap\bootstrap.min.css'))">
+      <SourceType>Package</SourceType>
+      <SourceId>Securitas8.8</SourceId>
+      <ContentRoot>$(MSBuildThisFileDirectory)..\staticwebassets\</ContentRoot>
+      <BasePath>/</BasePath>
+      <RelativePath>css/bootstrap/bootstrap.min.css</RelativePath>
+      <AssetKind>All</AssetKind>
+      <AssetMode>All</AssetMode>
+      <AssetRole>Primary</AssetRole>
+      <RelatedAsset></RelatedAsset>
+      <AssetTraitName></AssetTraitName>
+      <AssetTraitValue></AssetTraitValue>
+      <Fingerprint>6gzpyzhau4</Fingerprint>
+      <Integrity>SiIVMGgRhdXjKSTIddX7mh9IbOXVcwQWc7/p4nS6D/0=</Integrity>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      <FileLength>162726</FileLength>
+      <LastWriteTime>Wed, 31 Dec 2025 05:34:12 GMT</LastWriteTime>
+      <OriginalItemSpec>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\css\bootstrap\bootstrap.min.css'))</OriginalItemSpec>
+    </StaticWebAsset>
+    <StaticWebAsset Include="$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\css\bootstrap\bootstrap.min.css.map'))">
+      <SourceType>Package</SourceType>
+      <SourceId>Securitas8.8</SourceId>
+      <ContentRoot>$(MSBuildThisFileDirectory)..\staticwebassets\</ContentRoot>
+      <BasePath>/</BasePath>
+      <RelativePath>css/bootstrap/bootstrap.min.css.map</RelativePath>
+      <AssetKind>All</AssetKind>
+      <AssetMode>All</AssetMode>
+      <AssetRole>Primary</AssetRole>
+      <RelatedAsset></RelatedAsset>
+      <AssetTraitName></AssetTraitName>
+      <AssetTraitValue></AssetTraitValue>
+      <Fingerprint>8inm30yfxf</Fingerprint>
+      <Integrity>gBwg2tmA0Ci2u54gMF1jNCVku6vznarkLS6D76htNNQ=</Integrity>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      <FileLength>449111</FileLength>
+      <LastWriteTime>Wed, 31 Dec 2025 05:34:12 GMT</LastWriteTime>
+      <OriginalItemSpec>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\css\bootstrap\bootstrap.min.css.map'))</OriginalItemSpec>
+    </StaticWebAsset>
+    <StaticWebAsset Include="$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\Images\cpplus_4mp_bullet.jpg'))">
+      <SourceType>Package</SourceType>
+      <SourceId>Securitas8.8</SourceId>
+      <ContentRoot>$(MSBuildThisFileDirectory)..\staticwebassets\</ContentRoot>
+      <BasePath>/</BasePath>
+      <RelativePath>Images/cpplus_4mp_bullet.jpg</RelativePath>
+      <AssetKind>All</AssetKind>
+      <AssetMode>All</AssetMode>
+      <AssetRole>Primary</AssetRole>
+      <RelatedAsset></RelatedAsset>
+      <AssetTraitName></AssetTraitName>
+      <AssetTraitValue></AssetTraitValue>
+      <Fingerprint>crhsgmbww1</Fingerprint>
+      <Integrity>6CDqYXOuPI1tG5Y4oPt/WPXZq6TurIoIkBIqEpOgyc0=</Integrity>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      <FileLength>61409</FileLength>
+      <LastWriteTime>Sat, 27 Dec 2025 07:20:26 GMT</LastWriteTime>
+      <OriginalItemSpec>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\Images\cpplus_4mp_bullet.jpg'))</OriginalItemSpec>
+    </StaticWebAsset>
+    <StaticWebAsset Include="$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\Images\cpplus_ptz.jpg'))">
+      <SourceType>Package</SourceType>
+      <SourceId>Securitas8.8</SourceId>
+      <ContentRoot>$(MSBuildThisFileDirectory)..\staticwebassets\</ContentRoot>
+      <BasePath>/</BasePath>
+      <RelativePath>Images/cpplus_ptz.jpg</RelativePath>
+      <AssetKind>All</AssetKind>
+      <AssetMode>All</AssetMode>
+      <AssetRole>Primary</AssetRole>
+      <RelatedAsset></RelatedAsset>
+      <AssetTraitName></AssetTraitName>
+      <AssetTraitValue></AssetTraitValue>
+      <Fingerprint>npnsj42x21</Fingerprint>
+      <Integrity>C0pwXjuD31gg0DmKG+b1IDaFbiOtVBId+XuQIw3Q+0k=</Integrity>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      <FileLength>9739</FileLength>
+      <LastWriteTime>Sat, 27 Dec 2025 07:22:14 GMT</LastWriteTime>
+      <OriginalItemSpec>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\Images\cpplus_ptz.jpg'))</OriginalItemSpec>
+    </StaticWebAsset>
+    <StaticWebAsset Include="$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\Images\dahua_5mp_ir.jpg'))">
+      <SourceType>Package</SourceType>
+      <SourceId>Securitas8.8</SourceId>
+      <ContentRoot>$(MSBuildThisFileDirectory)..\staticwebassets\</ContentRoot>
+      <BasePath>/</BasePath>
+      <RelativePath>Images/dahua_5mp_ir.jpg</RelativePath>
+      <AssetKind>All</AssetKind>
+      <AssetMode>All</AssetMode>
+      <AssetRole>Primary</AssetRole>
+      <RelatedAsset></RelatedAsset>
+      <AssetTraitName></AssetTraitName>
+      <AssetTraitValue></AssetTraitValue>
+      <Fingerprint>k6edy05nae</Fingerprint>
+      <Integrity>DPvl0jcvlBIQmD2+ys71hLdKGJVLpXsviGuD2ecwaCA=</Integrity>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      <FileLength>22048</FileLength>
+      <LastWriteTime>Sat, 27 Dec 2025 07:21:01 GMT</LastWriteTime>
+      <OriginalItemSpec>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\Images\dahua_5mp_ir.jpg'))</OriginalItemSpec>
+    </StaticWebAsset>
+    <StaticWebAsset Include="$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\Images\hikvision_2mp_dome.jpg'))">
+      <SourceType>Package</SourceType>
+      <SourceId>Securitas8.8</SourceId>
+      <ContentRoot>$(MSBuildThisFileDirectory)..\staticwebassets\</ContentRoot>
+      <BasePath>/</BasePath>
+      <RelativePath>Images/hikvision_2mp_dome.jpg</RelativePath>
+      <AssetKind>All</AssetKind>
+      <AssetMode>All</AssetMode>
+      <AssetRole>Primary</AssetRole>
+      <RelatedAsset></RelatedAsset>
+      <AssetTraitName></AssetTraitName>
+      <AssetTraitValue></AssetTraitValue>
+      <Fingerprint>2a3av9j3ku</Fingerprint>
+      <Integrity>5p3JCUD9dj7ASKcZkTWWZklCtcSYLb+YTNGA8CiV9qI=</Integrity>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      <FileLength>79002</FileLength>
+      <LastWriteTime>Sat, 27 Dec 2025 07:19:47 GMT</LastWriteTime>
+      <OriginalItemSpec>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\Images\hikvision_2mp_dome.jpg'))</OriginalItemSpec>
+    </StaticWebAsset>
+    <StaticWebAsset Include="$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\Images\hikvision_8mp_4k.jpg'))">
+      <SourceType>Package</SourceType>
+      <SourceId>Securitas8.8</SourceId>
+      <ContentRoot>$(MSBuildThisFileDirectory)..\staticwebassets\</ContentRoot>
+      <BasePath>/</BasePath>
+      <RelativePath>Images/hikvision_8mp_4k.jpg</RelativePath>
+      <AssetKind>All</AssetKind>
+      <AssetMode>All</AssetMode>
+      <AssetRole>Primary</AssetRole>
+      <RelatedAsset></RelatedAsset>
+      <AssetTraitName></AssetTraitName>
+      <AssetTraitValue></AssetTraitValue>
+      <Fingerprint>ca8f47w2fj</Fingerprint>
+      <Integrity>tFeFk3nWz6xHlWsAfGFu+1vByAHXYW20CKQHgk679as=</Integrity>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      <FileLength>139846</FileLength>
+      <LastWriteTime>Sat, 27 Dec 2025 07:21:41 GMT</LastWriteTime>
+      <OriginalItemSpec>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\Images\hikvision_8mp_4k.jpg'))</OriginalItemSpec>
+    </StaticWebAsset>
+    <StaticWebAsset Include="$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\Images\imou_wifi.jpg'))">
+      <SourceType>Package</SourceType>
+      <SourceId>Securitas8.8</SourceId>
+      <ContentRoot>$(MSBuildThisFileDirectory)..\staticwebassets\</ContentRoot>
+      <BasePath>/</BasePath>
+      <RelativePath>Images/imou_wifi.jpg</RelativePath>
+      <AssetKind>All</AssetKind>
+      <AssetMode>All</AssetMode>
+      <AssetRole>Primary</AssetRole>
+      <RelatedAsset></RelatedAsset>
+      <AssetTraitName></AssetTraitName>
+      <AssetTraitValue></AssetTraitValue>
+      <Fingerprint>zqw4bcmjad</Fingerprint>
+      <Integrity>yznFQZG3cEs/bxxsI0S24kY47gVrU2XQ9QhMF2Aiua4=</Integrity>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      <FileLength>54713</FileLength>
+      <LastWriteTime>Sat, 27 Dec 2025 07:22:37 GMT</LastWriteTime>
+      <OriginalItemSpec>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\Images\imou_wifi.jpg'))</OriginalItemSpec>
+    </StaticWebAsset>
+    <StaticWebAsset Include="$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\index.html'))">
+      <SourceType>Package</SourceType>
+      <SourceId>Securitas8.8</SourceId>
+      <ContentRoot>$(MSBuildThisFileDirectory)..\staticwebassets\</ContentRoot>
+      <BasePath>/</BasePath>
+      <RelativePath>index.html</RelativePath>
+      <AssetKind>All</AssetKind>
+      <AssetMode>All</AssetMode>
+      <AssetRole>Primary</AssetRole>
+      <RelatedAsset></RelatedAsset>
+      <AssetTraitName></AssetTraitName>
+      <AssetTraitValue></AssetTraitValue>
+      <Fingerprint>flfu4crpnv</Fingerprint>
+      <Integrity>jTFGx0gI1UfYRLMoRfwZBPMIiQaU06AviG/MLFFZEt0=</Integrity>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      <FileLength>857</FileLength>
+      <LastWriteTime>Wed, 31 Dec 2025 05:34:12 GMT</LastWriteTime>
+      <OriginalItemSpec>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\index.html'))</OriginalItemSpec>
+    </StaticWebAsset>
+    <StaticWebAsset Include="$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\Securitas8.8.styles.css'))">
+      <SourceType>Package</SourceType>
+      <SourceId>Securitas8.8</SourceId>
+      <ContentRoot>$(MSBuildThisFileDirectory)..\staticwebassets\</ContentRoot>
+      <BasePath>/</BasePath>
+      <RelativePath>Securitas8.8.styles.css</RelativePath>
+      <AssetKind>All</AssetKind>
+      <AssetMode>CurrentProject</AssetMode>
+      <AssetRole>Primary</AssetRole>
+      <RelatedAsset></RelatedAsset>
+      <AssetTraitName>ScopedCss</AssetTraitName>
+      <AssetTraitValue>ApplicationBundle</AssetTraitValue>
+      <Fingerprint>j2tze2ttbn</Fingerprint>
+      <Integrity>FVwRfhXQaXO6AJqp6LEKgfUfVw26mqnHd3IZkqQ7EOc=</Integrity>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      <FileLength>5481</FileLength>
+      <LastWriteTime>Sun, 04 Jan 2026 08:04:04 GMT</LastWriteTime>
+      <OriginalItemSpec>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\Securitas8.8.styles.css'))</OriginalItemSpec>
+    </StaticWebAsset>
+  </ItemGroup>
+</Project>

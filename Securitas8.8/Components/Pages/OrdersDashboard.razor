@@ -1,0 +1,62 @@
+﻿@page "/"
+@using Securitas8._8.Models
+@using Securitas8._8.Services
+@inject OrderService OrderService
+@inject NavigationManager Nav
+@inject LocalizationService L
+@inject OrderWorkflowStateService State
+@implements IDisposable
+<h3>@L["Dashboard"]</h3>
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>@L["OrderNo"]</th>
+            <th>@L["CustomerName"]</th>
+            <th>@L["Email"]</th>
+            <th>@L["Phone"]</th>
+            <th>@L["Salesperson"]</th>
+            <th>@L["Date"]</th>
+            <th>@L["Status"]</th>
+            <th>@L["Total"]</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var order in OrderService.GetAllOrders())
+        {
+            <tr>
+                <td>@order.OrderNo</td>
+                <td>@order.Customer.Name</td>
+                <td>@order.Customer.Email</td>
+                <td>@order.Customer.Phone</td>
+                <td>@order.SalesPerson</td>
+                <td>@L.Date(order.CreatedDate)</td>
+                <td>@order.Status</td>
+                <td>@L.Currency(order.TotalAmount)</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<div class="text-end mt-3">
+    <button class="btn btn-primary" @onclick="CreateOrder">
+        ➕ @L["CreateOrder"]
+    </button>
+</div>
+@code {
+    void CreateOrder()
+    {
+        State.Reset();
+        Nav.NavigateTo("/order/customer");
+    }
+    protected override void OnInitialized()
+    {
+       
+        L.OnChange += StateHasChanged;
+    }
+
+    public void Dispose()
+    {
+        L.OnChange -= StateHasChanged;
+    }
+}

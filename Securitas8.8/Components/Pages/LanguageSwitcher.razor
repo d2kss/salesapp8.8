@@ -1,0 +1,17 @@
+﻿@using Securitas8._8.Models
+@using Securitas8._8.Services
+@inject LocalizationService L
+
+<select class="form-select form-select-sm w-auto"
+        @onchange="ChangeLanguage">
+    <option value="en">English ($)</option>
+    <option value="fr">Français (€)</option>
+</select>
+
+@code {
+    async Task ChangeLanguage(ChangeEventArgs e)
+    {
+        await L.LoadAsync(e.Value!.ToString()!);
+        StateHasChanged();
+    }
+}
