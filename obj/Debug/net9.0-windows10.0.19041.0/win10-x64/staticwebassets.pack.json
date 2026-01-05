@@ -1,0 +1,69 @@
+{
+  "Files": [
+    {
+      "Id": "D:\\MAUI\\Securitas8.8\\obj\\Debug\\net9.0-windows10.0.19041.0\\win10-x64\\scopedcss\\bundle\\Securitas8.8.styles.css",
+      "PackagePath": "staticwebassets\\Securitas8.8.styles.css"
+    },
+    {
+      "Id": "D:\\MAUI\\Securitas8.8\\wwwroot\\Images\\cpplus_4mp_bullet.jpg",
+      "PackagePath": "staticwebassets\\Images\\cpplus_4mp_bullet.jpg"
+    },
+    {
+      "Id": "D:\\MAUI\\Securitas8.8\\wwwroot\\Images\\cpplus_ptz.jpg",
+      "PackagePath": "staticwebassets\\Images\\cpplus_ptz.jpg"
+    },
+    {
+      "Id": "D:\\MAUI\\Securitas8.8\\wwwroot\\Images\\dahua_5mp_ir.jpg",
+      "PackagePath": "staticwebassets\\Images\\dahua_5mp_ir.jpg"
+    },
+    {
+      "Id": "D:\\MAUI\\Securitas8.8\\wwwroot\\Images\\hikvision_2mp_dome.jpg",
+      "PackagePath": "staticwebassets\\Images\\hikvision_2mp_dome.jpg"
+    },
+    {
+      "Id": "D:\\MAUI\\Securitas8.8\\wwwroot\\Images\\hikvision_8mp_4k.jpg",
+      "PackagePath": "staticwebassets\\Images\\hikvision_8mp_4k.jpg"
+    },
+    {
+      "Id": "D:\\MAUI\\Securitas8.8\\wwwroot\\Images\\imou_wifi.jpg",
+      "PackagePath": "staticwebassets\\Images\\imou_wifi.jpg"
+    },
+    {
+      "Id": "D:\\MAUI\\Securitas8.8\\wwwroot\\css\\app.css",
+      "PackagePath": "staticwebassets\\css\\app.css"
+    },
+    {
+      "Id": "D:\\MAUI\\Securitas8.8\\wwwroot\\css\\bootstrap\\bootstrap.min.css",
+      "PackagePath": "staticwebassets\\css\\bootstrap\\bootstrap.min.css"
+    },
+    {
+      "Id": "D:\\MAUI\\Securitas8.8\\wwwroot\\css\\bootstrap\\bootstrap.min.css.map",
+      "PackagePath": "staticwebassets\\css\\bootstrap\\bootstrap.min.css.map"
+    },
+    {
+      "Id": "D:\\MAUI\\Securitas8.8\\wwwroot\\index.html",
+      "PackagePath": "staticwebassets\\index.html"
+    },
+    {
+      "Id": "obj\\Debug\\net9.0-windows10.0.19041.0\\win10-x64\\staticwebassets\\msbuild.Securitas8.8.Microsoft.AspNetCore.StaticWebAssetEndpoints.props",
+      "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssetEndpoints.props"
+    },
+    {
+      "Id": "obj\\Debug\\net9.0-windows10.0.19041.0\\win10-x64\\staticwebassets\\msbuild.Securitas8.8.Microsoft.AspNetCore.StaticWebAssets.props",
+      "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssets.props"
+    },
+    {
+      "Id": "obj\\Debug\\net9.0-windows10.0.19041.0\\win10-x64\\staticwebassets\\msbuild.build.Securitas8.8.props",
+      "PackagePath": "build\\Securitas8.8.props"
+    },
+    {
+      "Id": "obj\\Debug\\net9.0-windows10.0.19041.0\\win10-x64\\staticwebassets\\msbuild.buildMultiTargeting.Securitas8.8.props",
+      "PackagePath": "buildMultiTargeting\\Securitas8.8.props"
+    },
+    {
+      "Id": "obj\\Debug\\net9.0-windows10.0.19041.0\\win10-x64\\staticwebassets\\msbuild.buildTransitive.Securitas8.8.props",
+      "PackagePath": "buildTransitive\\Securitas8.8.props"
+    }
+  ],
+  "ElementsToRemove": []
+}

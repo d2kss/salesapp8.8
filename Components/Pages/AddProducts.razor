@@ -1,0 +1,637 @@
+﻿@* @page "/order/products"
+
+@using Securitas8.Shared.Models
+@using SecuritasApp8.Shared.Models
+@using SecuritasApp8.Shared.Services
+@inject OrderService OrderService
+@inject NavigationManager Nav
+@inject OrderWorkflowStateService State
+<Stepper />
+
+
+<h5 class="mb-3">Add Products</h5>
+
+<div class="row g-3">
+    @foreach (var p in products)
+    {
+        <div class="col-lg-4 col-md-6">
+            <div class="card h-100 shadow-sm border-0">
+
+                <!-- Product Image -->
+                <div class="bg-light text-center p-2">
+                    <img src="@p.ImageUrl"
+                         class="img-fluid"
+                         style="max-height:140px; object-fit:contain;" />
+                </div>
+
+                <div class="card-body d-flex flex-column">
+
+                    <!-- Product Info -->
+                    <h6 class="fw-semibold mb-1">@p.Name</h6>
+                    <p class="text-muted small mb-2">
+                        @p.Description
+                    </p>
+
+                    <!-- Price -->
+                    <div class="mb-2">
+                        <span class="fw-bold text-success fs-6">
+                            ₹@p.Price
+                        </span>
+                        <span class="text-muted small">
+                            / unit
+                        </span>
+                    </div>
+
+                    <!-- Quantity + Discount -->
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+
+                        <!-- Quantity -->
+                        <div>
+                            <label class="small fw-semibold d-block">
+                                Quantity
+                            </label>
+                            <div class="btn-group btn-group-sm">
+                                <button class="btn btn-outline-secondary"
+                                        @onclick="() => State.SetQuantity(p.Id, State.GetQuantity(p.Id) - 1)"
+                                        disabled="@(quantities[p.Id] == 1)">
+                                    −
+                                </button>
+                                <button class="btn btn-light" disabled>
+                                    @quantities[p.Id]
+                                </button>
+                                <button class="btn btn-outline-secondary"
+                                        @onclick="() => State.SetQuantity(p.Id, State.GetQuantity(p.Id) + 1)">
+                                    +
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Discount -->
+                        <div class="text-end">
+                            <label class="small fw-semibold d-block">
+                                Discount (%)
+                            </label>
+                            <input type="number"
+                                   class="form-control form-control-sm text-end"
+                                   style="width:90px"
+                                   min="0"
+                                   max="100"
+                                   @bind="discounts[p.Id]" />
+                        </div>
+
+                    </div>
+
+                    <!-- Add-ons -->
+                    @if (p.AddOns.Any())
+                    {
+                        <div class="border rounded p-2 mb-3 bg-light">
+                            <label class="small fw-semibold mb-1">
+                                Add-on Services
+                            </label>
+
+                            @foreach (var a in p.AddOns)
+                            {
+                                <div class="form-check small">
+                                    <input class="form-check-input"
+                                           type="checkbox"
+                                           @onchange="(e) => ToggleAddon(p.Id, a, (bool)e.Value!)" />
+                                    <label class="form-check-label">
+                                        @a.Name
+                                        <span class="text-muted">
+                                            (+₹@a.Price)
+                                        </span>
+                                    </label>
+                                </div>
+                            }
+                        </div>
+                    }
+
+                    <!-- CTA -->
+                    <button class="btn btn-primary btn-sm w-100 mt-auto"
+                            @onclick="() => AddItem(p)">
+                        ➕ Add to Order
+                    </button>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+
+<div class="d-flex justify-content-between mt-4">
+    <button class="btn btn-outline-secondary" @onclick="GoBack">
+        ← Back
+    </button>
+
+    <button class="btn btn-primary" @onclick="GoNext">
+        Next ➜
+    </button>
+</div> *@
+
+@* @code {
+    Order order = new()
+    {
+        SalesPerson = "Sales User",
+        Status = "New"
+    };
+
+    List<Product> products;
+
+    Dictionary<int, int> quantities = new();
+    Dictionary<int, decimal> discounts = new();
+    Dictionary<int, HashSet<int>> selectedAddOns = new();
+    protected override void OnInitialized()
+    {
+        products = OrderService.GetProducts();
+
+        foreach (var p in products)
+        {
+            State.Quantities.TryAdd(p.Id, 1);
+            State.Discounts.TryAdd(p.Id, 0);
+            State.SelectedAddOns.TryAdd(p.Id, new HashSet<int>());
+        }
+    }
+    void ToggleAddon(int pid, AddOnService a, bool val)
+    {
+        if (val) State.SelectedAddOns[pid].Add(a.Id);
+        else State.SelectedAddOns[pid].Remove(a.Id);
+
+
+    }
+    int GetQuantity(int productId) => quantities[productId];
+
+    void IncreaseQty(int productId)
+    {
+        quantities[productId]++;
+    }
+
+    void DecreaseQty(int productId)
+    {
+        if (quantities[productId] > 1)
+            quantities[productId]--;
+    }
+
+    void AddItem(Product product)
+    {
+        // order.Items.Add(new OrderItem
+        // {
+        //     Product = product,
+        //     Quantity = quantities[product.Id],
+        //     DiscountPercent = discounts[product.Id],
+        //     SelectedAddOns = product.AddOns.Where(a => selectedAddOns[product.Id].Contains(a.Id)).ToList()
+        // });
+
+        // quantities[product.Id] = 1;
+        // discounts[product.Id] = 0;
+        // selectedAddOns[product.Id].Clear();
+        var addOns = product.AddOns
+            .Where(a => State.SelectedAddOns[product.Id].Contains(a.Id));
+        State.AddOrUpdateProduct(
+        product,
+        State.Quantities[product.Id],
+        State.Discounts[product.Id],
+        addOns
+    );
+    }
+
+
+    void GoNext()
+    {
+        Nav.NavigateTo("/order/summary");
+    }
+    void GoBack()
+    {
+        Nav.NavigateTo("/order/customer");
+    } 
+}*@
+@* @page "/order/products"
+@using Securitas8.Shared.Services
+@using SecuritasApp8.Shared.Models
+@using SecuritasApp8.Shared.Services
+@inject NavigationManager Nav
+@inject OrderService OrderService
+@inject OrderWorkflowStateService State
+@inject LocalizationService L
+<h4>@L["AddProducts"]</h4>
+
+<div class="row g-3">
+@foreach (var p in OrderService.GetProducts())
+{
+    <div class="col-md-4">
+        <div class="card p-3 h-100">
+
+            <h6>@p.Name</h6>
+            <p class="small text-muted">@p.Description</p>
+            <strong>@L.Currency(p.Price)</strong>
+
+            <div class="mt-2">
+                <label>Qty</label>
+                <div class="btn-group btn-group-sm">
+                    <button class="btn btn-outline-secondary"
+                            @onclick="() => State.SetQuantity(p.Id, State.GetQuantity(p.Id) - 1)">−</button>
+                    <button class="btn btn-light" disabled>
+                        @State.GetQuantity(p.Id)
+                    </button>
+                    <button class="btn btn-outline-secondary"
+                            @onclick="() => State.SetQuantity(p.Id, State.GetQuantity(p.Id) + 1)">+</button>
+                </div>
+            </div>
+
+            <input class="form-control form-control-sm mt-2"
+                   type="number"
+                   placeholder="Discount %"
+                   value="@State.GetDiscount(p.Id)"
+                   @onchange="e => State.SetDiscount(p.Id, Convert.ToDecimal(e.Value))" />
+
+            @foreach (var a in p.AddOns)
+            {
+                <div class="form-check small">
+                    <input type="checkbox"
+                           class="form-check-input"
+                           checked="@State.GetSelectedAddOns(p.Id).Contains(a.Id)"
+                           @onchange="e => ToggleAddon(p.Id, a.Id, (bool)e.Value!)" />
+                    <label>@a.Name (+@L.Currency(p.Price))</label>
+                </div>
+            }
+
+            <button class="btn btn-sm btn-primary mt-2"
+                    @onclick="() => AddItem(p)">
+                Add
+            </button>
+        </div>
+    </div>
+}
+</div>
+
+<div class="d-flex justify-content-between mt-4">
+    <button class="btn btn-outline-secondary" @onclick="GoBack">
+        ← Back
+    </button>
+
+    <button class="btn btn-primary" @onclick="GoNext">
+        Next ➜
+    </button>
+</div> *@
+@page "/order/products"
+
+@using Securitas8._8.Models 
+@using Securitas8._8.Services
+
+
+@inject NavigationManager Nav
+@inject ProductService productService
+@inject OrderWorkflowStateService State
+@inject LocalizationService L
+@inject CartState Cart
+<Stepper />
+<OrderProgress></OrderProgress>
+@if (Cart.ShowAddedAlert)
+{
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        <strong>Added to Cart!</strong> @Cart.Message
+        <button type="button" class="btn-close" @onclick="Cart.Clear"></button>
+    </div>
+}
+<h4 class="mb-4 fw-semibold">
+    @L["AddProducts"]
+</h4>
+@if (!string.IsNullOrEmpty(validationError))
+{
+    <div class="alert alert-danger">
+        @validationError
+    </div>
+}
+<div class="row g-3">
+    @foreach (var p in productService.GetProducts())
+    {
+        <div class="col-xl-4 col-lg-6">
+            <div class="card h-100 shadow-sm border-0">
+
+                <!-- Product Image -->
+                <div class="bg-light text-center p-2">
+                    <img src="@p.ImageUrl"
+                         class="img-fluid"
+                         style="max-height:120px; object-fit:contain;" />
+                </div>
+
+                <div class="card-body d-flex flex-column">
+
+                    <!-- Name -->
+                    <h6 class="fw-semibold mb-1">@p.Name</h6>
+                    <p class="small text-muted mb-2">
+                        @p.Description
+                    </p>
+
+                    <!-- Price -->
+                    <div class="mb-2">
+                        <span class="fw-bold text-success">
+                            @L.Currency(p.Price)
+                        </span>
+                        <span class="text-muted small"> / unit</span>
+                    </div>
+
+                    <!-- Qty + Discount (Same Line) -->
+                    <div class="d-flex justify-content-between align-items-end mb-3">
+
+                        <!-- Quantity -->
+                        <div>
+                            <label class="small fw-semibold">@L["Qty"]</label>
+                            <div class="btn-group btn-group-sm">
+                                <button class="btn btn-outline-secondary px-2"
+                                        disabled="@(State.GetQuantity(p.Id) <= 1)"
+                                        @onclick="() =>
+                                        {
+                                            State.SetQuantity(p.Id, State.GetQuantity(p.Id) - 1);
+                                                                                                  //State.RecalculateMaterials(p,);
+                                        }">
+                                      −
+                                  </button>
+                                  <button class="btn btn-light px-3 fw-semibold" disabled>
+                                      @State.GetQuantity(p.Id)
+                                  </button>
+                                  <button class="btn btn-outline-secondary px-2"
+                                          @onclick="() =>
+                                        {
+                                            State.SetQuantity(p.Id, State.GetQuantity(p.Id) + 1);
+                                                                                                  // RecalculateMaterials(p);   // 👉 ADD
+                                        }">
+                                      +
+                                  </button>
+                              </div>
+                          </div>
+
+                        <!-- Discount -->
+                        <div class="text-end">
+                            <label class="small fw-semibold">
+                                @L["Discount"]
+                            </label>
+                            <input type="number"
+                                   class="form-control form-control-sm text-end"
+                                   style="width:90px"
+                                   min="0"
+                                   max="100"
+                                   value="@State.GetDiscount(p.Id)"
+                                   @onchange="e => State.SetDiscount(p.Id, Convert.ToDecimal(e.Value))" />
+                        </div>
+                    </div>
+                    <div class="card mb-4 shadow-sm">
+                        <div class="card-body">
+                            <div class="row align-items-end">
+                                <div class="col-md-4">
+                                    <label class="form-label fw-semibold">
+                                        @L["Surfacecalc"]
+                                    </label>
+                                    <input type="number"
+                                           class="form-control"
+                                           min="0"
+                                           value="@State.GetSurface(p.Id)"
+                                           @oninput="e =>
+                                           {
+                                               State.SetSurface(p.Id, Convert.ToDecimal(e.Value));
+                                               State.RecalculateMaterials(
+                                       p,
+                                       r => CalculateRequiredQty(r, p)
+                                       );
+                                           }" />
+                                  </div>
+                                  <div class="col-md-8 text-muted small">
+                                      Used to auto-calculate cable, pipe & switch requirements
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                      <!-- Add-ons -->
+                    @if (p.AddOns.Any())
+                    {
+                        <div class="border rounded p-2 mb-3 bg-light">
+                            <label class="small fw-semibold d-block mb-1">
+                                ➕ @L["Add-ons"]
+                            </label>
+
+                            @foreach (var a in p.AddOns)
+                            {
+                                <div class="form-check small">
+                                    <input class="form-check-input"
+                                           type="checkbox"
+                                           checked="@State.GetSelectedAddOns(p.Id).Contains(a.Id)"
+                                           @onchange="e => ToggleAddon(p.Id, a.Id, (bool)e.Value!)" />
+                                    <label class="form-check-label">
+                                        @a.Name
+                                        <span class="text-muted">
+                                            (+@L.Currency(a.Price))
+                                        </span>
+                                    </label>
+                                </div>
+                            }
+                        </div>
+                    }
+
+                    @*  @if (p.RequiredMaterials.Any())
+                    {
+                        <div class="border rounded p-3 mb-3 bg-light">
+                            <label class="small fw-semibold d-block mb-2">
+                                Required Materials (Auto calculated)
+                            </label>
+
+                            @foreach (var r in p.RequiredMaterials)
+{
+    var minQty = CalculateRequiredQty(r, p);
+    var currentQty = State.GetRequiredQty(p.Id, r.Id, minQty);
+
+    <div class="row align-items-center mb-2">
+        <div class="col-5 small">
+            @r.Name
+        </div>
+
+        <div class="col-4">
+            <input type="number"
+                   class="form-control form-control-sm"
+                   min="@minQty"
+                   value="@currentQty"
+                   @oninput="e =>
+                   {
+                       if (int.TryParse(e.Value?.ToString(), out var qty))
+                       {
+                           State.SetRequiredQty(
+                               p.Id,
+                               r.Id,
+                               qty,
+                               minQty
+                           );
+                       }
+                   }" />
+        </div>
+
+        <div class="col-3 text-end fw-semibold">
+            @L.Currency(r.Price * currentQty)
+        </div>
+    </div>
+}
+                        </div>
+                    }
+ *@
+                    @if (p.MonitoringServices.Any())
+                    {
+                        <div class="border rounded p-2 mb-2 bg-light">
+                            <label class="small fw-semibold d-block mb-1">@L["Monitoring"]</label>
+                            @foreach (var m in p.MonitoringServices)
+                            {
+                                <div class="form-check small">
+                                    <input class="form-check-input" type="checkbox"
+                                           checked="@State.GetSelectedMonitoring(p.Id).Contains(m.Id)"
+                                           @onchange="e => ToggleMonitoringService(p.Id, m.Id, (bool)e.Value!)" />
+                                    <label class="form-check-label">@m.Name (+@L.Currency(m.Price))</label>
+                                </div>
+                            }
+                        </div>
+                    }
+                    <button class="btn btn-outline-primary"
+                            @onclick="() => AddItem(p)">
+                        ➕ Add to Order
+                    </button>
+
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+<!-- Navigation -->
+<div class="d-flex justify-content-between mt-4">
+    <button class="btn btn-outline-secondary"
+            @onclick="GoBack">
+        ← @L["Back"]
+    </button>
+
+  @*   <button class="btn btn-primary"
+            @onclick="GoNext">
+        @L["Next"] ➜
+    </button> *@
+    <button class="btn btn-primary mt-3"
+            @onclick="GoNext">
+        @L["Next"]➜
+</button>
+</div>
+
+
+@code {
+    string? validationError;
+    void ToggleAddon(int pid, int aid, bool val)
+    {
+        var set = State.GetSelectedAddOns(pid);
+        if (val) set.Add(aid);
+        else set.Remove(aid);
+    }
+    void ToggleMonitoringService(int pid, int sid, bool val)
+    {
+        var set = State.GetSelectedMonitoring(pid);
+        if (val) set.Add(sid);
+        else set.Remove(sid);
+    }
+    void AddItem(Product p)
+    {
+        State.MarkProductAdded(p.Id);
+        var addOns = p.AddOns
+            .Where(a => State.GetSelectedAddOns(p.Id).Contains(a.Id))
+            .ToList();
+        var required = p.RequiredMaterials.ToList();
+        var monitoring = p.MonitoringServices
+            .Where(m => State.GetSelectedMonitoring(p.Id).Contains(m.Id))
+            .ToList();
+
+
+        State.AddOrUpdateProduct(
+            p,
+            State.GetQuantity(p.Id),
+            State.GetDiscount(p.Id),
+            addOns.ToList(),
+            required,
+            monitoring
+        );
+        var serviceCount =
+        addOns.Count +
+        required.Count +
+        monitoring.Count;
+
+        Cart.ProductAdded(p.Name, serviceCount);
+        validationError = null;
+    }
+    void GoNext()
+    {
+        State.Next();
+        if (!State.HasAnyProduct())
+        {
+            validationError = L["SelectAtLeastOneProduct"];
+            return;
+        }
+        foreach (var productId in State.GetSelectedProductIds())
+        {
+            if (State.GetSurface(productId) <= 0)
+            {
+                var product = productService.GetProducts()
+                                          .First(p => p.Id == productId);
+
+                validationError = string.Format(L["Surfacearea"],product.Name);
+                return;
+            }
+        }
+        Cart.Clear();
+        Nav.NavigateTo("/order/summary");
+    }
+    void GoBack()
+    {
+        State.Back();
+        Nav.NavigateTo("/order/customer");
+    }
+    protected override void OnInitialized()
+    {
+        L.OnChange += StateHasChanged;
+        State.OnChange += StateHasChanged;
+    }
+
+    public void Dispose()
+    {
+        L.OnChange -= StateHasChanged;
+        State.OnChange -= StateHasChanged;
+    }
+    int CalculateRequiredQty(AddOnService material, Product p)
+    {
+        var cameras = State.GetQuantity(p.Id);
+        var surface = State.GetSurface(p.Id);
+
+        if (surface <= 0 || cameras <= 0)
+            return material.MinQuantity;
+
+        return material.Name switch
+        {
+            "CCTV Cable" =>
+                (int)Math.Ceiling(surface * 0.8m + cameras * 10),
+
+            "PVC Pipe" =>
+                (int)Math.Ceiling(surface * 0.5m),
+
+            "Network Switch" =>
+                (int)Math.Ceiling(cameras / 4m),
+
+            _ => material.MinQuantity
+        };
+    }
+
+    // void RecalculateMaterials(Product p)
+    // {
+    //     foreach (var r in p.RequiredMaterials)
+    //     {
+    //         var minQty = CalculateRequiredQty(r, p);
+
+    //         // Force minimum auto value
+    //         State.SetRequiredQty(
+    //             r.Id,
+    //             p.Id,
+    //             minQty,
+    //             minQty
+    //         );
+    //     }
+    // }
+
+}
+

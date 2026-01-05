@@ -1,0 +1,30 @@
+﻿@inject NavigationManager Nav
+
+<div class="d-flex justify-content-center mb-4">
+    <div class="d-flex align-items-center gap-3">
+
+        <span class="@StepClass("/order/customer")">
+            Customer Info
+        </span>
+
+        <span class="fs-4">➜</span>
+
+        <span class="@StepClass("/order/products")">
+            Add Products
+        </span>
+
+        <span class="fs-4">➜</span>
+
+        <span class="@StepClass("/order/summary")">
+            Order Summary
+        </span>
+
+    </div>
+</div>
+
+@code {
+    string StepClass(string route) =>
+        Nav.Uri.Contains(route)
+            ? "fw-bold text-primary"
+            : "text-muted";
+}

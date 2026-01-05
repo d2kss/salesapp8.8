@@ -1,0 +1,23 @@
+﻿@using Securitas8._8.Services
+@inject LocalizationService L
+@inherits LayoutComponentBase
+
+<div class="page">
+    <div class="sidebar">
+        <NavMenu />
+    </div>
+
+    <main>
+       <Securitas8._8.Components.Pages.LanguageSwitcher></Securitas8._8.Components.Pages.LanguageSwitcher>
+
+        <article class="content px-4">
+            @Body
+        </article>
+    </main>
+</div>
+@code {
+    protected override async Task OnInitializedAsync()
+    {
+        await L.LoadAsync("en"); // Default English
+    }
+}

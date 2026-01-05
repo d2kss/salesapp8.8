@@ -1,0 +1,152 @@
+﻿@page "/order/summary"
+
+@using Securitas8._8.Models
+@using Securitas8._8.Services
+@inject OrderService OrderService
+@inject NavigationManager Nav
+@inject OrderWorkflowStateService State
+@inject LocalizationService L
+<Stepper />
+<OrderProgress />
+
+<h5 class="mt-4 mb-3">@L["Summary"]</h5>
+@* <table class="table table-sm">
+    <thead>
+        <tr>
+            <th>@L["Product"]</th>
+            <th>@L["Qty"]</th>
+            <th>@L["Discount"]</th>
+            <th>@L["Add-ons"]</th>
+            <th>@L["RequiredMet"]</th>
+            <th>@L["Monitoring"]</th>
+            <th>@L["FinalPrice"]</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in State.Order.Items)
+        {
+            <tr>
+                <td>@item.Product.Name</td>
+                <td>@item.Quantity</td>
+                <td>@item.DiscountPercent</td>
+                <td>
+                    @string.Join(", ",
+                    item.SelectedAddOns.Select(a =>
+                    $"{a.Name} × {item.GetServiceQty(a.Id)} {a.Unit} " +
+                    $"({L.Currency(a.Price * item.GetServiceQty(a.Id))})"
+                    )
+                                )
+            </td>
+            <td>
+                @string.Join(", ",
+                                item.RequiredMaterials.Select(r =>
+                                $"{r.Name} × {item.GetServiceQty(r.Id)} {r.Unit} " +
+                                $"({L.Currency(r.Price * item.GetServiceQty(r.Id))})"
+                                )
+                                )
+            </td>
+            <td>
+                @string.Join(", ",
+                                item.MonitoringServices.Select(m =>
+                                $"{m.Name} ({L.Currency(m.Price * item.GetServiceQty(m.Id))})"
+                                )
+                                )
+            </td>
+                <td>@L.Currency(item.FinalPrice)</td>
+            </tr>
+        }
+    </tbody>
+</table> *@
+<table class="table table-sm table-bordered table-hover align-middle">
+    <thead class="table-light">
+        <tr>
+            <th style="width:15%">@L["Product"]</th>
+            <th style="width:5%">@L["Qty"]</th>
+            <th style="width:5%">@L["Discount"]</th>
+            <th style="width:20%">@L["Add-ons"]</th>
+            <th style="width:20%">@L["RequiredMet"]</th>
+            <th style="width:20%">@L["Monitoring"]</th>
+            <th style="width:15%">@L["FinalPrice"]</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in State.Order.Items)
+        {
+            <tr>
+                <td>
+                    <strong>@item.Product.Name</strong>
+                    <div class="small text-muted">@item.Product.Description</div>
+                </td>
+                <td class="text-center">@item.Quantity</td>
+                <td class="text-center">@item.DiscountPercent %</td>
+                <td>
+                    @foreach (var a in item.SelectedAddOns)
+                    {
+                        <div class="text-truncate" style="max-width:200px;">
+                            @a.Name × @item.GetServiceQty(a.Id) @a.Unit
+                            (<span class="fw-semibold">@L.Currency(a.Price * item.GetServiceQty(a.Id))</span>)
+                        </div>
+                    }
+                </td>
+                <td>
+                    @foreach (var r in item.RequiredMaterials)
+                    {
+                        <div class="text-truncate" style="max-width:200px;">
+                            @r.Name × @item.GetServiceQty(r.Id) @r.Unit
+                            (<span class="fw-semibold">@L.Currency(r.Price * item.GetServiceQty(r.Id))</span>)
+                        </div>
+                    }
+                </td>
+                <td>
+                    @foreach (var m in item.MonitoringServices)
+                    {
+                        <div class="text-truncate" style="max-width:200px;">
+                            @m.Name
+                            (<span class="fw-semibold">@L.Currency(m.Price * item.GetServiceQty(m.Id))</span>)
+                        </div>
+                    }
+                </td>
+                <td class="text-end fw-bold">@L.Currency(item.FinalPrice)</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+
+<h5>@L["Total"]: @L.Currency(State.Order.TotalAmount)</h5>
+<div class="d-flex justify-content-between mt-4">
+    <button class="btn btn-outline-secondary"
+            @onclick="GoBack">
+        ← Back
+    </button>
+<button class="btn btn-success" @onclick="SubmitOrder">
+    Submit Order
+</button>
+
+</div>
+
+@code {
+
+    void SubmitOrder()
+    {
+        OrderService.PlaceOrder(State.Order);
+        State.Reset();
+        Nav.NavigateTo("/");
+    }
+    void GoBack()
+    {
+        State.Back();
+        OrderService.PlaceOrder(State.Order);
+        Nav.NavigateTo("/order/products");
+    }
+    protected override void OnInitialized()
+    {
+        State.Next();
+        L.OnChange += StateHasChanged;
+    }
+
+    public void Dispose()
+    {
+        L.OnChange -= StateHasChanged;
+    }
+}

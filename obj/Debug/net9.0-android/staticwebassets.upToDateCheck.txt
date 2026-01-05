@@ -1,0 +1,14 @@
+wwwroot\css\app.css
+wwwroot\css\bootstrap\bootstrap.min.css
+wwwroot\css\bootstrap\bootstrap.min.css.map
+wwwroot\Images\cpplus_4mp_bullet.jpg
+wwwroot\Images\cpplus_ptz.jpg
+wwwroot\Images\dahua_5mp_ir.jpg
+wwwroot\Images\hikvision_2mp_dome.jpg
+wwwroot\Images\hikvision_8mp_4k.jpg
+wwwroot\Images\imou_wifi.jpg
+wwwroot\index.html
+D:\MAUI\Securitas8.8\wwwroot\css\app.css
+D:\MAUI\Securitas8.8\wwwroot\index.html
+D:\MAUI\Securitas8.8\wwwroot\css\bootstrap\bootstrap.min.css.map
+D:\MAUI\Securitas8.8\wwwroot\css\bootstrap\bootstrap.min.css

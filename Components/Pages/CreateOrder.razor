@@ -1,0 +1,353 @@
+﻿@page "/create-order"
+@using Securitas8._8.Models
+@using Securitas8._8.Services
+@inject OrderService OrderService
+@inject ProductService productService
+@inject NavigationManager Nav
+
+<h3>Create New Order</h3>
+
+@* <h5>Customer Information</h5>
+<input class="form-control mb-2" placeholder="Customer Name" @bind="order.Customer.Name" />
+<input class="form-control mb-2" placeholder="Email" @bind="order.Customer.Email" />
+<input class="form-control mb-2" placeholder="Phone" @bind="order.Customer.Phone" /> *@
+<div class="card shadow-sm mb-4">
+    <div class="card-header bg-light fw-semibold">
+        👤 Customer Information
+    </div>
+
+    <div class="card-body">
+        <!-- Customer Basic Info -->
+        <div class="row g-3">
+            <div class="col-md-6">
+                <label class="form-label">Customer Name</label>
+                <input class="form-control"
+                       placeholder="Full name"
+                       @bind="order.Customer.Name" />
+            </div>
+
+            <div class="col-md-6">
+                <label class="form-label">Email</label>
+                <input type="email"
+                       class="form-control"
+                       placeholder="email@example.com"
+                       @bind="order.Customer.Email" />
+            </div>
+
+            <div class="col-md-6">
+                <label class="form-label">Phone</label>
+                <input class="form-control"
+                       placeholder="+91 98765 43210"
+                       @bind="order.Customer.Phone" />
+            </div>
+        </div>
+
+        <hr class="my-4" />
+
+        <!-- Address Section -->
+        <h6 class="fw-semibold mb-3">🏠 Address Information</h6>
+
+        <div class="row g-3">
+            <div class="col-12">
+                <label class="form-label">Street Address</label>
+                <input class="form-control"
+                       placeholder="House no, street, area"
+                       @bind="order.Customer.Address.Street" />
+            </div>
+
+            <div class="col-md-4">
+                <label class="form-label">City</label>
+                <input class="form-control"
+                       placeholder="City"
+                       @bind="order.Customer.Address.City" />
+            </div>
+
+            <div class="col-md-4">
+                <label class="form-label">State</label>
+                <input class="form-control"
+                       placeholder="State"
+                       @bind="order.Customer.Address.State" />
+            </div>
+
+            <div class="col-md-4">
+                <label class="form-label">Postal Code</label>
+                <input class="form-control"
+                       placeholder="PIN / ZIP"
+                       @bind="order.Customer.Address.PostalCode" />
+            </div>
+
+            <div class="col-md-6">
+                <label class="form-label">Country</label>
+                <input class="form-control"
+                       placeholder="Country"
+                       @bind="order.Customer.Address.Country" />
+            </div>
+        </div>
+    </div>
+</div>
+<h5 class="mb-3">Add Products</h5>
+
+<div class="row g-3">
+    @foreach (var p in products)
+    {
+        <div class="col-lg-4 col-md-6">
+            <div class="card h-100 shadow-sm border-0">
+
+                <!-- Product Image -->
+                <div class="bg-light text-center p-2">
+                    <img src="@p.ImageUrl"
+                         class="img-fluid"
+                         style="max-height:140px; object-fit:contain;" />
+                </div>
+
+                <div class="card-body d-flex flex-column">
+
+                    <!-- Product Info -->
+                    <h6 class="fw-semibold mb-1">@p.Name</h6>
+                    <p class="text-muted small mb-2">
+                        @p.Description
+                    </p>
+
+                    <!-- Price -->
+                    <div class="mb-2">
+                        <span class="fw-bold text-success fs-6">
+                            ₹@p.Price
+                        </span>
+                        <span class="text-muted small">
+                            / unit
+                        </span>
+                    </div>
+
+                    <!-- Quantity + Discount -->
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+
+                        <!-- Quantity -->
+                        <div>
+                            <label class="small fw-semibold d-block">
+                                Quantity
+                            </label>
+                            <div class="btn-group btn-group-sm">
+                                <button class="btn btn-outline-secondary"
+                                        @onclick="() => quantities[p.Id]--"
+                                        disabled="@(quantities[p.Id] == 1)">
+                                    −
+                                </button>
+                                <button class="btn btn-light" disabled>
+                                    @quantities[p.Id]
+                                </button>
+                                <button class="btn btn-outline-secondary"
+                                        @onclick="() => quantities[p.Id]++">
+                                    +
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Discount -->
+                        <div class="text-end">
+                            <label class="small fw-semibold d-block">
+                                Discount (%)
+                            </label>
+                            <input type="number"
+                                   class="form-control form-control-sm text-end"
+                                   style="width:90px"
+                                   min="0"
+                                   max="100"
+                                   @bind="discounts[p.Id]" />
+                        </div>
+
+                    </div>
+
+                    <!-- Add-ons -->
+                    @if (p.AddOns.Any())
+                    {
+                        <div class="border rounded p-2 mb-3 bg-light">
+                            <label class="small fw-semibold mb-1">
+                                Add-on Services
+                            </label>
+
+                            @foreach (var a in p.AddOns)
+                            {
+                                <div class="form-check small">
+                                    <input class="form-check-input"
+                                           type="checkbox"
+                                           @onchange="(e) => ToggleAddon(p.Id, a, (bool)e.Value!)" />
+                                    <label class="form-check-label">
+                                        @a.Name
+                                        <span class="text-muted">
+                                            (+₹@a.Price)
+                                        </span>
+                                    </label>
+                                </div>
+                            }
+                        </div>
+                    }
+
+                    <!-- CTA -->
+                    <button class="btn btn-primary btn-sm w-100 mt-auto"
+                            @onclick="() => AddItem(p)">
+                        ➕ Add to Order
+                    </button>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+@* <h5 class="mt-4">Add Products</h5>
+
+<div class="row">
+    @foreach (var product in products)
+    {
+        <div class="col-md-4 mb-3">
+            <div class="card h-100 shadow-sm">
+                <img src="@product.ImageUrl"
+                     class="card-img-top"
+                     style="height:150px; object-fit:contain;" />
+
+                <div class="card-body">
+                    <h6>@product.Name</h6>
+                    <p class="text-muted small">@product.Description</p>
+                    <p><strong>₹@product.Price</strong></p>
+
+                    <div class="d-flex align-items-center mb-2">
+                        <button class="btn btn-outline-secondary btn-sm"
+                                @onclick="() => DecreaseQty(product.Id)">
+                            −
+                        </button>
+
+                        <span class="mx-2">@GetQuantity(product.Id)</span>
+
+                        <button class="btn btn-outline-secondary btn-sm"
+                                @onclick="() => IncreaseQty(product.Id)">
+                            +
+                        </button>
+                    </div>
+                    <label class="form-label small fw-semibold">
+                        Discount Applied (%)
+                    </label>
+                    <input type="number"
+                           class="form-control form-control-sm mb-2"
+                           placeholder="Discount %"
+                           @bind="discounts[product.Id]" />
+                    <label class="small fw-semibold">Add-On Services</label>
+                    @foreach (var a in product.AddOns)
+                    {
+                        <div class="form-check small">
+                            <input type="checkbox"
+                                   class="form-check-input"
+                                   @onchange="(e) => ToggleAddon(product.Id, a, (bool)e.Value!)" />
+                            <label class="form-check-label">
+                                @a.Name (+₹@a.Price)
+                            </label>
+                        </div>
+                    }
+                    <button class="btn btn-sm btn-primary w-100"
+                            @onclick="() => AddItem(product)">
+                        Add to Order
+                    </button>
+                </div>
+            </div>
+        </div>
+    }
+</div> *@
+<h5 class="mt-4 mb-3">Order Summary</h5>
+<table class="table table-sm">
+    <thead>
+        <tr>
+            <th>Product</th>
+            <th>Qty</th>
+            <th>Discount %</th>
+            <th>Add-ons</th>
+            <th>Final Price</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in order.Items)
+        {
+            <tr>
+                <td>@item.Product.Name</td>
+                <td>@item.Quantity</td>
+                <td>@item.DiscountPercent</td>
+                <td>@string.Join(", ", item.SelectedAddOns.Select(a => a.Name))</td>
+                <td>₹@item.FinalPrice</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<h5>Total Amount: ₹@order.TotalAmount</h5>
+
+<button class="btn btn-success" @onclick="SubmitOrder">
+    Submit Order
+</button>
+<button class="btn btn-outline-secondary"
+        @onclick="GoBack">
+    ← Back
+</button>
+
+@code {
+    Order order = new()
+    {
+        SalesPerson = "Sales User",
+        Status = "New"
+    };
+
+    List<Product> products;
+
+    Dictionary<int, int> quantities = new();
+    Dictionary<int, decimal> discounts = new();
+    Dictionary<int, HashSet<int>> selectedAddOns = new();
+    protected override void OnInitialized()
+    {
+        products = productService.GetProducts();
+
+        foreach (var p in products)
+        {
+            quantities[p.Id] = 1;
+            discounts[p.Id] = 0;
+            selectedAddOns[p.Id] = new();
+        }
+    }
+    void ToggleAddon(int pid, AddOnService a, bool val)
+    {
+        if (val) selectedAddOns[pid].Add(a.Id);
+        else selectedAddOns[pid].Remove(a.Id);
+    }
+    int GetQuantity(int productId) => quantities[productId];
+
+    void IncreaseQty(int productId)
+    {
+        quantities[productId]++;
+    }
+
+    void DecreaseQty(int productId)
+    {
+        if (quantities[productId] > 1)
+            quantities[productId]--;
+    }
+
+    void AddItem(Product product)
+    {
+        order.Items.Add(new OrderItem
+        {
+            Product = product,
+            Quantity = quantities[product.Id],
+            DiscountPercent = discounts[product.Id],
+            SelectedAddOns = product.AddOns.Where(a => selectedAddOns[product.Id].Contains(a.Id)).ToList()
+        });
+
+        quantities[product.Id] = 1;
+        discounts[product.Id] = 0;
+        selectedAddOns[product.Id].Clear();
+    }
+
+    void SubmitOrder()
+    {
+        OrderService.PlaceOrder(order);
+        Nav.NavigateTo("/");
+    }
+    void GoBack()
+    {
+        Nav.NavigateTo("/");
+    }
+}

@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Securitas8.8</name>
+    </assembly>
+    <members>
+        <member name="M:Securitas8._8.Services.OrderService.PlaceOrder(Securitas8._8.Models.Order)">
+            <summary>
+            Save a new order with customer info, order items, and services
+            </summary>
+        </member>
+        <member name="M:Securitas8._8.Services.OrderService.GetOrderByOrderNo(System.Int32)">
+            <summary>
+            Fetch full details of a single order by OrderNo
+            Includes customer, address, items, services
+            </summary>
+        </member>
+        <member name="M:Securitas8._8.Services.OrderService.GetAllOrders">
+            <summary>
+            Fetch all orders with full details
+            </summary>
+        </member>
+        <member name="T:Securitas8._8.Resource">
+            <summary>
+            Android Resource Designer class.
+            Exposes the Android Resource designer assembly into the project Namespace.
+            </summary>
+        </member>
+    </members>
+</doc>

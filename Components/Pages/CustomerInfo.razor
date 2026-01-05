@@ -1,0 +1,148 @@
+﻿@page "/order/customer"
+@using Securitas8._8.Models 
+@using Securitas8._8.Services
+@inject OrderService OrderService
+@inject NavigationManager Nav
+@inject OrderWorkflowStateService State
+@inject LocalizationService L
+<Stepper />
+<OrderProgress />
+<EditForm Model="@customer" OnValidSubmit="GoNext" OnInvalidSubmit="OnInvalidSubmit">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+<div class="card shadow-sm mb-4">
+    <div class="card-header bg-light fw-semibold">
+         @L["CustomerInfo"]
+    </div>
+
+    <div class="card-body">
+        <!-- Customer Basic Info -->
+        <div class="row g-3">
+            <div class="col-md-6">
+                <label class="form-label">@L["Name"]</label>
+                <input class="form-control"
+                       placeholder="Full name"
+                       @bind="customer.Name" />
+                <ValidationMessage For="@(() => customer.Name)" />
+            </div>
+
+            <div class="col-md-6">
+                <label class="form-label">@L["Email"]</label>
+                <input type="email"
+                       class="form-control"
+                       placeholder="Test@gmail.com"
+                       @bind="customer.Email" />
+                <ValidationMessage For="@(() => customer.Email)" />
+            </div>
+
+            <div class="col-md-6">
+                <label class="form-label">@L["Phone"]</label>
+                <input class="form-control"
+                       placeholder="+91 999999999"
+                       @bind="customer.Phone" />
+                <ValidationMessage For="@(() => customer.Phone)" />
+            </div>
+        </div>
+
+        <hr class="my-4" />
+
+       <!-- Address Section -->
+<div class="card border-0 shadow-sm mt-4">
+    <div class="card-header bg-light fw-semibold">
+        🏠 @L["Address"]
+    </div>
+
+    <div class="card-body">
+        <div class="row g-3">
+
+            <!-- Country -->
+            <div class="col-md-4">
+                <label class="form-label">@L["Country"]</label>
+                <select class="form-select"
+                        @bind="customer.Address.Country">
+                    <option value="">-- @L["SelectCountry"] --</option>
+                    @foreach (var c in Countries)
+                    {
+                        <option value="@c.Code">@c.Name</option>
+                    }
+                </select>
+                <ValidationMessage For="@(() => customer.Address.Country)" />
+            </div>
+
+            <!-- State -->
+            <div class="col-md-4">
+                <label class="form-label">@L["State"]</label>
+                <input class="form-control"
+                       placeholder="@L["State"]"
+                       @bind="customer.Address.State" />
+                <ValidationMessage For="@(() => customer.Address.State)" />
+            </div>
+
+            <!-- City -->
+            <div class="col-md-4">
+                <label class="form-label">@L["City"]</label>
+                <input class="form-control"
+                       placeholder="@L["City"]"
+                       @bind="customer.Address.City" />
+                <ValidationMessage For="@(() => customer.Address.City)" />
+            </div>
+
+            <!-- Street Address -->
+            <div class="col-12">
+                <label class="form-label">@L["StAddress"]</label>
+                <input class="form-control"
+                       placeholder="@L["StAddress"]"
+                       @bind="customer.Address.Street" />
+                <ValidationMessage For="@(() => customer.Address.Street)" />
+            </div>
+
+            <!-- Postal Code -->
+            <div class="col-md-4">
+                <label class="form-label">@L["PostalCode"]</label>
+                <input class="form-control"
+                       placeholder="@L["PostalCode"]"
+                       @bind="customer.Address.PostalCode" />
+                <ValidationMessage For="@(() => customer.Address.PostalCode)" />
+            </div>
+
+        </div>
+    </div>
+</div
+    </div>
+</div>
+
+<div class="d-flex justify-content-between mt-4">
+    <button class="btn btn-outline-secondary" @onclick="GoBack">
+        ← Back
+    </button>
+
+        <button type="submit" class="btn btn-primary">Next ➜</button>
+</div>
+</EditForm>
+@code {
+    Customer customer = new();
+    List<Country> Countries = Country.GetAll();
+    void GoNext()
+    {
+        State.Next();
+        State.SaveCustomer(customer);
+        Nav.NavigateTo("/order/products");
+    }
+    void OnInvalidSubmit()
+    {
+        
+    }
+    void GoBack()
+    {
+        Nav.NavigateTo("/");
+    }
+    protected override void OnInitialized()
+    {
+        L.OnChange += StateHasChanged;
+    }
+
+    public void Dispose()
+    {
+        L.OnChange -= StateHasChanged;
+    }
+}
